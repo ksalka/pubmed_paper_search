@@ -1,0 +1,19 @@
+h2 {
+	background-color: lightgreen;
+	text-align: center;
+	margin: 14px
+}
+body{
+	background-color: lightblue;
+	margin: 50px
+}
+div {
+	margin: 14px
+}
+	p {
+		margin: 1px
+	}
+	.title {
+		font-weight: bold;
+		font-size: 18px
+	}
