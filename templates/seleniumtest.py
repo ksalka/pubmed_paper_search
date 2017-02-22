@@ -64,8 +64,6 @@ for x in range(20):
         PubMedID.append(PMID.text)
         print
 
-print authors, info, PubMedID
-
 driver.close()
 
 #Reading and writing to HTML file
@@ -74,9 +72,12 @@ newfile = open('profile.html','w')
 
 #checking for duplicate papers
 for line in readMe:
-    for y in papers:
+    for index,y in enumerate(papers):
         if line == '\t\t<p class="title">'+y+'</p>\n':
-            papers.remove(y)
+            del papers[index]
+            del authors[index]
+            del info[index]
+            del PubMedID[index]
 
 
 #Adding papers to html file
@@ -85,8 +86,8 @@ count = 0
 for line in readMe:
     if line == '\t<div>\n':    
         if count == 0:
-            for x in papers[::-1]:
-                newfile.write('\t<div>\n\t\t<p class="title">'+x+'</p>\n\t</div>\n')
+            for z in range(len(papers)):
+                newfile.write('\t<div>\n\t\t<p class="title">'+papers[z]+'</p>\n\t\t<p class="authors">'+authors[z]+'</p>\n\t\t<p class="journal">'+info[z]+'</p>\n\t\t<p class="PMID">'+PubMedID[z]+'</p>\n\t</div>\n')
                 count += 1
     newfile.write(line)
 

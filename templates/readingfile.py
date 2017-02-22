@@ -1,12 +1,22 @@
 readMe = open('profile.html','r').readlines()
 #newfile = open('profile.html','w')
 
-papers = ['paper1', 'paper2', 'This is paper #3']
+papers = ['paper1', 'paper2', 'paper3']
+authors = ['author1', 'author2', 'author3']
+info = ['journal1', 'journal2', 'journal3']
+PubMedID = ['PMID1', 'PMID2', 'PMID3']
 
 #checking for duplicate papers
-for line in readMe:
-    if line[0:4] == '\t\t<p':
-        print line
+for x,y in enumerate(papers):
+    if y == 'paper4':
+        del papers[x]
+        del authors[x]
+        del info[x]
+        del PubMedID[x]
+    #print x,y 
+
+for z in range(len(papers)):
+    print papers[z], authors[z], info[z], PubMedID[z]
 
 
 #Adding papers to html file
