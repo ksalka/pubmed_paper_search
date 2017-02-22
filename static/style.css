@@ -1,25 +1,54 @@
 h2 {
-	background-color: lightgreen;
+	background-color: #5b80c1;
 	text-align: center;
-	margin: 14px
+	font-size: 40px;
+	color: white;
+	text-shadow: 1px 1px 1px #333;
+	margin: 0px;
+	padding: 40px;
+	border-radius: 0 0 15px 15px;
+	box-shadow: 0px 3px 3px #4e5a6d;
 }
 body{
-	background-color: lightblue;
-	margin: 50px
+	background: linear-gradient(white, #dbe6f9);
+	margin: 0px;
+	padding: 0px 0px 200px 0px;
 }
 div {
-	margin: 14px
+	margin: 15px 40px;
+	padding: 10px;
 }
-	p {
-		margin: 1px
-	}
-	.title {
-		font-weight: bold;
-		font-size: 17px
-	}
-	.journal {
-		font-size: 15px
-	}
-	.PMID {
-		font-size: 14px
-	}
+p {
+	margin: 1px
+}
+.title {
+	font-weight: bold;
+	font-size: 17px
+}
+.journal {
+	font-size: 15px
+}
+.PMID {
+	font-size: 14px
+}
+div.searchinfo{
+	font-size: 14px;
+	padding: 15px 10px 0px 10px;
+	margin: 0px;
+}
+
+dl.searchnumber{
+	text-align: left;
+	margin: 0px 0px 0px 40px;
+	display: inline;
+}
+dt{
+	display: inline;
+	margin: 2px;
+	font-weight: bold;
+}
+dd{
+	display: inline;
+	margin: 2px;
+}
+

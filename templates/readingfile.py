@@ -1,5 +1,6 @@
-readMe = open('profile.html','r').readlines()
+#readMe = open('profile.html','r').readlines()
 #newfile = open('profile.html','w')
+import datetime
 
 papers = ['paper1', 'paper2', 'paper3']
 authors = ['author1', 'author2', 'author3']
@@ -15,20 +16,23 @@ for x,y in enumerate(papers):
         del PubMedID[x]
     #print x,y 
 
-for z in range(len(papers)):
-    print papers[z], authors[z], info[z], PubMedID[z]
+#for z in range(len(papers)):
+#    print papers[z], authors[z], info[z], PubMedID[z]
 
+now = datetime.datetime.now()
+
+print str(now.month)+'-'+str(now.day)+'-'+str(now.year)
 
 #Adding papers to html file
-count = 0
+#count = 0
 
-for line in readMe:
-    if line == '\t<div>\n':    
-        if count == 0:
-            for x in papers[::1]:
-                newfile.write('\t<div>\n\t\t<p class="title">'+x+'</p>\n\t</div>\n')
-                count += 1
-    newfile.write(line)
+#for line in readMe:
+#    if line == '\t<div>\n':    
+#        if count == 0:
+#            for x in papers[::1]:
+#                newfile.write('\t<div>\n\t\t<p class="title">'+x+'</p>\n\t</div>\n')
+#                count += 1
+#    newfile.write(line)
 
-newfile.close()
+#newfile.close()
 
