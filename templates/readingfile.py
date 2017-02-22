@@ -20,15 +20,15 @@ for z in range(len(papers)):
 
 
 #Adding papers to html file
-#count = 0
+count = 0
 
-#for line in readMe:
-#    if line[0:4] == '\t<p>':
-#        if count == 0:
-#            for x in papers[::-1]:
-#                newfile.write('\t<p>'+x+'</p>\n')
-#                count += 1
-#    newfile.write(line)
+for line in readMe:
+    if line == '\t<div>\n':    
+        if count == 0:
+            for x in papers[::1]:
+                newfile.write('\t<div>\n\t\t<p class="title">'+x+'</p>\n\t</div>\n')
+                count += 1
+    newfile.write(line)
 
-#newfile.close()
+newfile.close()
 
