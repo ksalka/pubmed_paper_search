@@ -44,22 +44,32 @@ newfile = open('profile.html','w')
 #checking for duplicate papers
 for line in readMe:
     for index,y in enumerate(PubMedID):
-        if line == '\t\t<p class="PMID">'+'PMID: '+y+'</p>\n':
+        if line == '\t\t\t<p class="PMID">'+'PMID: '+y+'</p>\n':
             del papers[index]
             del authors[index]
             del info[index]
             del PubMedID[index]
 
 
-#Adding papers to html file
-count = 0
+#paper count
+papercount = 0
 
 for line in readMe:
-    if line == '\t<div>\n':    
-        if count == 0:
-            for z in range(len(papers)):
-                newfile.write('\t<div>\n\t\t<p class="title">\n\t\t\t<a href="https://www.ncbi.nlm.nih.gov/pubmed/'+PubMedID[z]+'">'+papers[z]+'</a>\n\t\t</p>\n\t\t<p class="authors">'+authors[z]+'</p>\n\t\t<p class="journal">'+info[z]+'</p>\n\t\t<p class="PMID">'+'PMID: '+PubMedID[z]+'</p>\n\t</div>\n')
-                count += 1
-    newfile.write(line)
+    if line == '\t\t\t<p class="title">\n':
+        papercount += 1
+        
+print papercount +len(papers)
+
+#Adding papers to html file
+
+for line in readMe:
+    if line[0:7] == '\t\t\t<dd>':
+        newfile.write('\t\t\t<dd>'+str(papercount + len(papers))+'</dd>\n')
+    elif line == '\t<div class="papers">\n':    
+        newfile.write(line)
+        for z in range(len(papers)):
+            newfile.write('\t\t<div>\n\t\t\t<p class="title">\n\t\t\t\t<a href="https://www.ncbi.nlm.nih.gov/pubmed/'+PubMedID[z]+'">'+papers[z]+'</a>\n\t\t\t</p>\n\t\t\t<p class="authors">'+authors[z]+'</p>\n\t\t\t<p class="journal">'+info[z]+'</p>\n\t\t\t<p class="PMID">'+'PMID: '+PubMedID[z]+'</p>\n\t\t</div>\n')
+    elif line != '\t<div class="papers">\n' or line[0:7] != '\t\t\t<dd>':                
+        newfile.write(line)
 
 newfile.close()
