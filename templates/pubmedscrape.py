@@ -1,7 +1,10 @@
 import bs4 as bs
 import urllib2
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
-SearchTerm = "Cystic Fibrosis MUC5AC MUC5B Proteomics"
+SearchTerm = "Cystic Fibrosis TNF Proteomics"
 
 #Creating URL Term for BeautifulSoup
 words = SearchTerm.split()
@@ -58,8 +61,6 @@ for line in readMe:
     if line == '\t\t\t<p class="title">\n':
         papercount += 1
         
-print papercount +len(papers)
-
 #Adding papers to html file
 
 for line in readMe:
