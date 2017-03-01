@@ -1,43 +1,27 @@
-import bs4 as bs
-import urllib2
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+from Bio import Entrez
+from Bio import Medline
 
-SearchTerm = "Cystic Fibrosis TNF Proteomics"
+# The term and the max number of results that can be found
+MAX_COUNT = 20
+TERM = 'Cystic Fibrosis TNF proteomics'
 
-#Creating URL Term for BeautifulSoup
-words = SearchTerm.split()
-SearchString = ''
-
-for x in range(SearchTerm.count(' ')+1):
-    if x < SearchTerm.count(' '):
-        SearchString = SearchString+words[x]+'+'
-    else:
-        SearchString = SearchString+words[x]
-
-#Getting papers in search
-
-sauce = urllib2.urlopen('https://www.ncbi.nlm.nih.gov/pubmed/?term='+SearchString).read()
-soup = bs.BeautifulSoup(sauce,'lxml')
+Entrez.email = 'Kyle.Salka@gmail.com'
+handle = Entrez.esearch(db='pubmed', retmax=MAX_COUNT, term=TERM)
+result = Entrez.read(handle)
 
 papers = []
 authors = []
 info = []
-PubMedID = []
+PubMedID = result['IdList']
 
-for x in range(20):
-    for title in soup.find_all('p', class_="title")[x:x+1]:
-        papers.append(title.text)
+handle = Entrez.efetch(db='pubmed', id=PubMedID, rettype='medline', retmode='text')
+records = Medline.parse(handle)
 
-    for names in soup.find_all('p', class_="desc")[x:x+1]:
-        authors.append(names.text)
-
-    for details in soup.find_all('p', class_="details")[x:x+1]:
-        info.append(details.text)
-    
-    for PMID in soup.find_all('dd')[x:x+1]:
-        PubMedID.append(PMID.text)
+#Obtaining paper title, authors, and journal info
+for record in records:
+    papers.append(record.get("TI", "?"))
+    authors.append(record.get("AU", "?"))
+    info.append(record.get("SO", "?"))
 
 
 #Reading and writing to HTML file
@@ -47,7 +31,7 @@ newfile = open('profile.html','w')
 #checking for duplicate papers
 for line in readMe:
     for index,y in enumerate(PubMedID):
-        if line == '\t\t\t<p class="PMID">'+'PMID: '+y+'</p>\n':
+        if line == '\t\t\t<p class="PMID">'+'PMID: '+y.encode('utf-8').strip()+'</p>\n':
             del papers[index]
             del authors[index]
             del info[index]
@@ -69,7 +53,12 @@ for line in readMe:
     elif line == '\t<div class="papers">\n':    
         newfile.write(line)
         for z in range(len(papers)):
-            newfile.write('\t\t<div>\n\t\t\t<p class="title">\n\t\t\t\t<a href="https://www.ncbi.nlm.nih.gov/pubmed/'+PubMedID[z]+'">'+papers[z]+'</a>\n\t\t\t</p>\n\t\t\t<p class="authors">'+authors[z]+'</p>\n\t\t\t<p class="journal">'+info[z]+'</p>\n\t\t\t<p class="PMID">'+'PMID: '+PubMedID[z]+'</p>\n\t\t</div>\n')
+            header = '\t\t<div>\n\t\t\t<p class="title">\n'
+            line1 = '\t\t\t\t<a href="https://www.ncbi.nlm.nih.gov/pubmed/{0}">{1}</a>\n'.format(PubMedID[z], papers[z])
+            line2 = '\t\t\t</p>\n\t\t\t<p class="authors">{0}</p>\n'.format(', '.join(authors[z]))
+            line3 = '\t\t\t<p class="journal">{0}</p>\n'.format(info[z])
+            line4 = '\t\t\t<p class="PMID">PMID: {0} </p>\n\t\t</div>\n'.format(PubMedID[z])
+            newfile.write(header+line1+line2+line3+line4)
     elif line != '\t<div class="papers">\n' or line[0:7] != '\t\t\t<dd>':                
         newfile.write(line)
 
