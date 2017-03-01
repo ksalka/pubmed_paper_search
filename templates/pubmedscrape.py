@@ -5,7 +5,7 @@ from Bio import Medline
 MAX_COUNT = 20
 TERM = 'Cystic Fibrosis TNF proteomics'
 
-Entrez.email = 'Kyle.Salka@gmail.com'
+Entrez.email = 'YourEmail@gmail.com'
 handle = Entrez.esearch(db='pubmed', retmax=MAX_COUNT, term=TERM)
 result = Entrez.read(handle)
 
