@@ -1,1 +1,2 @@
 # pubmed_paper_search
+###This program searches PubMed using specific search terms set by the user, takes the papers from the search query and uploads their info (Title, Authors, Journal info, and PMID) to a local webserver. The search term and max number of papers that can be added to the local webserver can be changed within the pubmedscrape.py (MAX_COUNT = 20 TERM = 'Cystic Fibrosis MUC5AC MUC5B proteomics'). 
