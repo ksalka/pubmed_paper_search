@@ -6,7 +6,7 @@ from Bio import Medline
 MAX_COUNT = 20
 TERM = 'Cystic Fibrosis MUC5AC MUC5B proteomics'
 
-Entrez.email = 'yourEmail@gmail.com'
+Entrez.email = 'YourEmail@gmail.com'
 handle = Entrez.esearch(db='pubmed', retmax=MAX_COUNT, term=TERM)
 result = Entrez.read(handle)
 
